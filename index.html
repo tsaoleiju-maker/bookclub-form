@@ -84,7 +84,7 @@
   </div>
 
 <script>
-const API_URL = "👉這裡之後會換成你的 GAS網址";
+const API_URL = "https://script.google.com/macros/s/AKfycbxhcf_VH8Obxw1nId8lCU6WmXUE6Ox1PlDbSik_B8QpoPQ_j2FwXeRhIw2tJoRCcbEtqw/exec";
 
 async function submitForm() {
   const data = {
@@ -100,14 +100,23 @@ async function submitForm() {
     return;
   }
 
-  await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  });
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
 
-  alert("報名成功！");
+    alert("報名成功！");
+    document.getElementById("memberName").value = "";
+    document.getElementById("lineName").value = "";
+    document.getElementById("guestName").value = "";
+    document.getElementById("reason").value = "";
+    document.getElementById("attendance").value = "參加";
+  } catch (err) {
+    alert("送出失敗：" + err.message);
+  }
 }
-</script>
-
-</body>
-</html>
